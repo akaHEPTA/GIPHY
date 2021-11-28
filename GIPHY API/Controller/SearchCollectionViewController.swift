@@ -16,7 +16,7 @@ class SearchCollectionViewController: UIViewController {
     private var collectionView: UICollectionView!
     
     private var searchTerm: String? = nil
-    private var scopeIndex: Int = 0
+//    private var scopeIndex: Int = 0
     
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
@@ -79,6 +79,9 @@ extension SearchCollectionViewController: UICollectionViewDataSource, UICollecti
     /// Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Collection View Delegate: selected index path is \(indexPath)")
+        let detailVC = DetailViewController()
+        detailVC.data = collectionItems[indexPath.item]
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
 }
@@ -100,13 +103,14 @@ extension SearchCollectionViewController: UISearchBarDelegate, UISearchControlle
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
         searchTerm = query
+        title = query
         searchRequest(with: query)
     }
     
+    // SEARCH SCOPE IS NOT REQUIRED - FIX LATER - Nov. 27
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        guard let query = searchBar.text else { return }
-        scopeIndex = selectedScope
-        searchRequest(with: query)
-        
+//        guard let query = searchBar.text else { return }
+//        scopeIndex = selectedScope
+//        searchRequest(with: query)
     }
 }

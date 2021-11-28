@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		88B8F9598314219613E3C250 /* Pods_GIPHY_API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E857535584C21F27567205A /* Pods_GIPHY_API.framework */; };
+		9C21E7022753389C00B6F066 /* Favorite.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C21E7002753389C00B6F066 /* Favorite.xcdatamodeld */; };
+		9C21E70527533C5F00B6F066 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21E70427533C5F00B6F066 /* DetailViewController.swift */; };
+		9C21E7072753402000B6F066 /* HorizontalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21E7062753402000B6F066 /* HorizontalStackView.swift */; };
+		9C21E7092753405100B6F066 /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21E7082753405100B6F066 /* VerticalStackView.swift */; };
 		9C8839ED2751B39C008F5FF1 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839EC2751B39C008F5FF1 /* SearchCollectionViewController.swift */; };
 		9C8839F12751BCD7008F5FF1 /* GifCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */; };
 		9C8839F82751E207008F5FF1 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839F72751E207008F5FF1 /* APIHandler.swift */; };
@@ -25,6 +29,10 @@
 		1EE3993E462BDEE403A8CC6F /* Pods-GIPHY API.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GIPHY API.release.xcconfig"; path = "Target Support Files/Pods-GIPHY API/Pods-GIPHY API.release.xcconfig"; sourceTree = "<group>"; };
 		413526BFA424020B4A641B43 /* Pods-GIPHY API.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GIPHY API.debug.xcconfig"; path = "Target Support Files/Pods-GIPHY API/Pods-GIPHY API.debug.xcconfig"; sourceTree = "<group>"; };
 		8E857535584C21F27567205A /* Pods_GIPHY_API.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GIPHY_API.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C21E7012753389C00B6F066 /* Favorite.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favorite.xcdatamodel; sourceTree = "<group>"; };
+		9C21E70427533C5F00B6F066 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		9C21E7062753402000B6F066 /* HorizontalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalStackView.swift; sourceTree = "<group>"; };
+		9C21E7082753405100B6F066 /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		9C8839EC2751B39C008F5FF1 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
 		9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCollectionViewCell.swift; sourceTree = "<group>"; };
 		9C8839F72751E207008F5FF1 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
@@ -52,6 +60,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C21E703275338E500B6F066 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9C8839EA2751B093008F5FF1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -66,8 +82,8 @@
 		9C8839EB2751B376008F5FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9C21E70427533C5F00B6F066 /* DetailViewController.swift */,
 				9C8839EC2751B39C008F5FF1 /* SearchCollectionViewController.swift */,
-				9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */,
 				9CD599542752A8DC00578E9B /* UICollectionViewCustomLayout.swift */,
 			);
 			path = Controller;
@@ -86,6 +102,8 @@
 			children = (
 				9CD5997A2752C14800578E9B /* UIImage+GIFSupport.swift */,
 				9C8839FA2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift */,
+				9C21E7062753402000B6F066 /* HorizontalStackView.swift */,
+				9C21E7082753405100B6F066 /* VerticalStackView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -93,6 +111,7 @@
 		9C8839FE2751F620008F5FF1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9C21E7002753389C00B6F066 /* Favorite.xcdatamodeld */,
 				9C8839FF2751F652008F5FF1 /* Gif.swift */,
 			);
 			path = Model;
@@ -125,6 +144,7 @@
 				9C8839F62751E1B9008F5FF1 /* Network */,
 				9C8839EA2751B093008F5FF1 /* Supporting Files */,
 				9C8839F92751EB42008F5FF1 /* Utils */,
+				9C21E703275338E500B6F066 /* View */,
 			);
 			path = "GIPHY API";
 			sourceTree = "<group>";
@@ -260,13 +280,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C21E70527533C5F00B6F066 /* DetailViewController.swift in Sources */,
 				9C8839ED2751B39C008F5FF1 /* SearchCollectionViewController.swift in Sources */,
 				9C8839FB2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift in Sources */,
+				9C21E7072753402000B6F066 /* HorizontalStackView.swift in Sources */,
 				9C883A002751F652008F5FF1 /* Gif.swift in Sources */,
+				9C21E7022753389C00B6F066 /* Favorite.xcdatamodeld in Sources */,
 				9C8839F82751E207008F5FF1 /* APIHandler.swift in Sources */,
 				9CD5997B2752C14800578E9B /* UIImage+GIFSupport.swift in Sources */,
 				9CD1BD502751A0E2004B17AF /* AppDelegate.swift in Sources */,
 				9CD1BD522751A0E2004B17AF /* SceneDelegate.swift in Sources */,
+				9C21E7092753405100B6F066 /* VerticalStackView.swift in Sources */,
 				9C8839F12751BCD7008F5FF1 /* GifCollectionViewCell.swift in Sources */,
 				9CD599552752A8DC00578E9B /* UICollectionViewCustomLayout.swift in Sources */,
 			);
@@ -482,6 +506,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9C21E7002753389C00B6F066 /* Favorite.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9C21E7012753389C00B6F066 /* Favorite.xcdatamodel */,
+			);
+			currentVersion = 9C21E7012753389C00B6F066 /* Favorite.xcdatamodel */;
+			path = Favorite.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9CD1BD442751A0E2004B17AF /* Project object */;
 }

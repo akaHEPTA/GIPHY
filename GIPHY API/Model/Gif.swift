@@ -18,12 +18,14 @@ struct Root: Codable {
 struct Gif: Codable {
     let id: String
     let url: String
+    let source: String
     let title: String
     let variants: Variants
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case url = "url"
+        case source = "source"
         case title = "title"
         case variants = "images"
     }

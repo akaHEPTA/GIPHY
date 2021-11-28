@@ -21,7 +21,6 @@ class GifCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage.gif(url: url)
         imageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
-        imageView.matchParent()
         imageView.contentMode = .scaleAspectFit
     }
     
@@ -31,6 +30,11 @@ class GifCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
     
 }

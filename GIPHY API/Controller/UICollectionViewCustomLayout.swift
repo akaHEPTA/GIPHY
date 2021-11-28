@@ -35,7 +35,9 @@ class UICollectionViewCustomLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
-        guard cache.isEmpty, let collectionView = collectionView else { return }
+        cache.removeAll()
+        guard cache.isEmpty == true || cache.isEmpty == false, let collectionView = collectionView else { return }
+        contentHeight = 0
         
         let columnWidth: CGFloat = contentWidth / CGFloat(numberOfColumns)
         var xOffset: [CGFloat] = []
@@ -67,10 +69,18 @@ class UICollectionViewCustomLayout: UICollectionViewLayout {
             
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
+        
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return cache.filter { rect.intersects( $0.frame) }
+        var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
+        
+        for attributes in cache {
+            if attributes.frame.intersects(rect) {
+                visibleLayoutAttributes.append(attributes)
+            }
+        }
+        return visibleLayoutAttributes
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
