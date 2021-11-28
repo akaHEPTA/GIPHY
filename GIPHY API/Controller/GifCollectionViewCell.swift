@@ -9,18 +9,24 @@ import UIKit
 
 class GifCollectionViewCell: UICollectionViewCell {
     
-    let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFill
-        iv.layer.masksToBounds = true
-        return iv
-    }()
+    var gif: Gif?
+    
+    let imageView = UIImageView()
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        addSubview(imageView)
+        guard let gif = gif else { return }
+        let url = gif.getDownsizedURL()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage.gif(url: url)
+        imageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        imageView.matchParent()
+        imageView.contentMode = .scaleAspectFit
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(imageView)
-        imageView.matchParent()
     }
     
     required init?(coder: NSCoder) {

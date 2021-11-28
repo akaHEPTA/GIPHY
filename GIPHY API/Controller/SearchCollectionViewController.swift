@@ -8,119 +8,105 @@
 import UIKit
 
 class SearchCollectionViewController: UIViewController {
-
+    
     private let cellId = "GifCell"
     private let padding: CGFloat = 6
-    
     private var collectionItems: [Gif] = []
+    private var root: Root!
+    private var collectionView: UICollectionView!
     
-    private let collectionView: UICollectionView = {
-        let lt = UICollectionViewFlowLayout()
-        lt.scrollDirection = .vertical
-        lt.minimumInteritemSpacing = 6
-        lt.minimumLineSpacing = 6
-        lt.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: lt)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        return cv
-    }()
+    private var searchTerm: String? = nil
+    private var scopeIndex: Int = 0
     
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
-        sc.searchBar.delegate = self
         sc.searchBar.placeholder = "Search"
+        sc.searchBar.delegate = self
         sc.searchBar.scopeButtonTitles = ["Gifs", "Clips", "Stickers", "Text"]
         sc.automaticallyShowsScopeBar = true
         definesPresentationContext = true
         return sc
     }()
     
-//    var searchText: String? {
-//        didSet {
-//            navigationItem.searchController?.searchBar.text = searchText
-//            navigationItem.searchController?.searchBar.searchTextField.resignFirstResponder()
-//            collectionView.reloadData()
-//            searchForGifs()
-//            title = searchText
-//        }
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search"
-        collectionView.register(GifCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.dataSource = self
+        
+        let lt = UICollectionViewCustomLayout()
+        lt.delegate = self
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: lt)
+        collectionView.backgroundColor = .systemBackground
+        view.addSubview(collectionView)
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.matchParent()
         collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(GifCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.searchController = searchController
-        
-        
+        navigationItem.searchController?.delegate = self
         
     }
-
-//    private func searchForGifs() {
-//        guard let searchText = searchText else {
-//            return
-//        }
-//
-//    }
-
+    
+    private func searchRequest(with query: String) {
+        APIHandler.shared.getSearchResult(with: query) { [weak self] result in
+            guard let result = result else {return}
+            DispatchQueue.main.async {
+                self?.collectionItems = result.data
+                self?.collectionView.reloadData()
+            }
+        }
+    }
+    
 }
 
-// MARK: - Data Source
+// MARK: - Collection View Delegate & Data Source
 
-extension SearchCollectionViewController: UICollectionViewDataSource {
+extension SearchCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
+    /// Data Source
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! GifCollectionViewCell
-        cell.backgroundColor = .blue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! GifCollectionViewCell
+        cell.gif = collectionItems[indexPath.item]
         return cell
     }
     
-}
-
-// MARK: - Delegate
-
-extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = (collectionView.frame.width - self.padding) / 2.0
-        return CGSize(width: size, height: size)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 0, left: 0, bottom:  0, right: 0)
-    }
-    
-}
-
-extension SearchCollectionViewController: UICollectionViewDelegate {
-    
+    /// Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        print("Collection View Delegate: selected index path is \(indexPath)")
+    }
+    
+}
+
+
+// MARK: - Custom Layout Delegate
+
+extension SearchCollectionViewController: UICollectionViewCustomLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let temp = Int(collectionItems[indexPath.item].variants.downsized.height)!
+        print(temp)
+        return CGFloat(temp)
     }
 }
 
-// MARK: - Search Bar Delegate
+// MARK: - Search Bar Delegate & Search Controller Delegate
 
-extension SearchCollectionViewController: UISearchBarDelegate {
+extension SearchCollectionViewController: UISearchBarDelegate, UISearchControllerDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
-        APIHandler.shared.getSearchResult(with: query) { result in
-            guard let result = result else { return }
-            self.collectionItems = result.data
-        }
+        searchTerm = query
+        searchRequest(with: query)
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        print("New scope index is now \(selectedScope)")
+        guard let query = searchBar.text else { return }
+        scopeIndex = selectedScope
+        searchRequest(with: query)
+        
     }
 }

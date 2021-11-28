@@ -38,7 +38,6 @@ class APIHandler {
                 case .success:
                     do {
                         let gifs: Root = try JSONDecoder().decode(Root.self, from: response.data!)
-                        print(gifs)
                         completion(gifs)
                     } catch {
                         print("JSON Serialization error", error)

@@ -12,12 +12,13 @@
 		9C8839F12751BCD7008F5FF1 /* GifCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */; };
 		9C8839F82751E207008F5FF1 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839F72751E207008F5FF1 /* APIHandler.swift */; };
 		9C8839FB2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839FA2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift */; };
-		9C8839FD2751EE7A008F5FF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839FC2751EE7A008F5FF1 /* ViewController.swift */; };
 		9C883A002751F652008F5FF1 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8839FF2751F652008F5FF1 /* Gif.swift */; };
 		9CD1BD502751A0E2004B17AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD1BD4F2751A0E2004B17AF /* AppDelegate.swift */; };
 		9CD1BD522751A0E2004B17AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD1BD512751A0E2004B17AF /* SceneDelegate.swift */; };
 		9CD1BD592751A0E4004B17AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CD1BD582751A0E4004B17AF /* Assets.xcassets */; };
 		9CD1BD5C2751A0E4004B17AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD1BD5A2751A0E4004B17AF /* LaunchScreen.storyboard */; };
+		9CD599552752A8DC00578E9B /* UICollectionViewCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD599542752A8DC00578E9B /* UICollectionViewCustomLayout.swift */; };
+		9CD5997B2752C14800578E9B /* UIImage+GIFSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5997A2752C14800578E9B /* UIImage+GIFSupport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +29,6 @@
 		9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCollectionViewCell.swift; sourceTree = "<group>"; };
 		9C8839F72751E207008F5FF1 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
 		9C8839FA2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConstraintLayout.swift"; sourceTree = "<group>"; };
-		9C8839FC2751EE7A008F5FF1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C8839FF2751F652008F5FF1 /* Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		9CD1BD4C2751A0E2004B17AF /* GIPHY API.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GIPHY API.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD1BD4F2751A0E2004B17AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +36,8 @@
 		9CD1BD582751A0E4004B17AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CD1BD5B2751A0E4004B17AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CD1BD5D2751A0E4004B17AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CD599542752A8DC00578E9B /* UICollectionViewCustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCustomLayout.swift; sourceTree = "<group>"; };
+		9CD5997A2752C14800578E9B /* UIImage+GIFSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+GIFSupport.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +68,7 @@
 			children = (
 				9C8839EC2751B39C008F5FF1 /* SearchCollectionViewController.swift */,
 				9C8839F02751BCD7008F5FF1 /* GifCollectionViewCell.swift */,
-				9C8839FC2751EE7A008F5FF1 /* ViewController.swift */,
+				9CD599542752A8DC00578E9B /* UICollectionViewCustomLayout.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -82,6 +84,7 @@
 		9C8839F92751EB42008F5FF1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9CD5997A2752C14800578E9B /* UIImage+GIFSupport.swift */,
 				9C8839FA2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift */,
 			);
 			path = Utils;
@@ -261,10 +264,11 @@
 				9C8839FB2751EB4B008F5FF1 /* UIView+ConstraintLayout.swift in Sources */,
 				9C883A002751F652008F5FF1 /* Gif.swift in Sources */,
 				9C8839F82751E207008F5FF1 /* APIHandler.swift in Sources */,
+				9CD5997B2752C14800578E9B /* UIImage+GIFSupport.swift in Sources */,
 				9CD1BD502751A0E2004B17AF /* AppDelegate.swift in Sources */,
-				9C8839FD2751EE7A008F5FF1 /* ViewController.swift in Sources */,
 				9CD1BD522751A0E2004B17AF /* SceneDelegate.swift in Sources */,
 				9C8839F12751BCD7008F5FF1 /* GifCollectionViewCell.swift in Sources */,
+				9CD599552752A8DC00578E9B /* UICollectionViewCustomLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
