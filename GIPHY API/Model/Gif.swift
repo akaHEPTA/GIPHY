@@ -37,6 +37,10 @@ struct Gif: Codable {
     func getDownsizedURL() -> String {
         return variants.downsized.url
     }
+    
+    func getDownsizedVideoURL() -> String {
+        return variants.downsized.mp4
+    }
 }
 
 struct Variants: Codable {
@@ -56,4 +60,5 @@ struct Original: Codable {
 struct Downsized: Codable {
     let height: String
     let url: String
+    let mp4: String
 }

@@ -41,7 +41,8 @@ class SearchCollectionViewController: UIViewController {
         collectionView.matchParent()
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(GifCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+//        collectionView.register(GifCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(SubclassedCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.searchController = searchController
@@ -71,7 +72,8 @@ extension SearchCollectionViewController: UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! GifCollectionViewCell
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! GifCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SubclassedCollectionViewCell
         cell.gif = collectionItems[indexPath.item]
         return cell
     }
@@ -82,6 +84,29 @@ extension SearchCollectionViewController: UICollectionViewDataSource, UICollecti
         let detailVC = DetailViewController()
         detailVC.data = collectionItems[indexPath.item]
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let visibleCells = self.collectionView.indexPathsForVisibleItems
+            .sorted { top, bottom -> Bool in
+                return top.section < bottom.section || top.row < bottom.row
+            }.compactMap { indexPath -> UICollectionViewCell? in
+                return self.collectionView.cellForItem(at: indexPath)
+            }
+        let indexPaths = self.collectionView.indexPathsForVisibleItems.sorted()
+        let cellCount = visibleCells.count
+        guard let firstCell = visibleCells.first as? SubclassedCollectionViewCell, let firstIndex = indexPaths.first else {return}
+        checkVisibilityOfCell(cell: firstCell, indexPath: firstIndex)
+        if cellCount == 1 {return}
+        guard let lastCell = visibleCells.last as? SubclassedCollectionViewCell, let lastIndex = indexPaths.last else {return}
+        checkVisibilityOfCell(cell: lastCell, indexPath: lastIndex)
+    }
+    
+    func checkVisibilityOfCell(cell: SubclassedCollectionViewCell, indexPath: IndexPath) {
+        if let cellRect = (collectionView.layoutAttributesForItem(at: indexPath)?.frame) {
+            let completelyVisible = collectionView.bounds.contains(cellRect)
+            if completelyVisible {cell.playVideo()} else {cell.stopVideo()}
+        }
     }
     
 }
