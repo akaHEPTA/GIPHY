@@ -14,6 +14,7 @@ class APIHandler {
     // Shared singleton instance
     static let shared = APIHandler()
     
+    // MARK: TEMPORARY HARDCODED KEY - REVOKE AFTER USE
     private let API_KEY = "CENSORED"
     
     struct EndPoint {
