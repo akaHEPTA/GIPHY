@@ -10,7 +10,7 @@ import CoreData
 
 class DetailViewController: UIViewController {
     
-    private lazy var cdManager = CoreDataHandler.shared
+    private lazy var handler = CoreDataHandler.shared
     
     var data: Gif! {
         didSet {
@@ -28,9 +28,16 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        isFavorited = handler.checkGif(by: data.id)
+        
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(favorite(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: isFavorited ? "star.fill" : "star"),
+            style: .plain,
+            target: self,
+            action: #selector(favoriteDidTap(_:)))
         setupView()
     }
     
@@ -42,8 +49,14 @@ class DetailViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
     }
     
-    @objc func favorite(_ sernder: UIBarButtonItem) {
-        
+    @objc func favoriteDidTap(_ sender: UIBarButtonItem) {
+        if isFavorited {
+            handler.deleteGif(id: data.id)
+        } else {
+            handler.saveGif(id: data.id, url: data.url)
+        }
+        isFavorited = !isFavorited
+        sender.image = UIImage(systemName: isFavorited ? "star.fill" : "star")
     }
     
     private func updateView() {

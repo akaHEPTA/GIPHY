@@ -19,69 +19,63 @@ class CoreDataHandler {
     
     func getGif(ascending: Bool = false) -> [SavedGif] {
         var models: [SavedGif] = [SavedGif]()
-        
-        if let context = context {
-            let idSort: NSSortDescriptor = NSSortDescriptor(key: "id", ascending: ascending)
-            let fetchRequest: NSFetchRequest<NSManagedObject>
-            = NSFetchRequest<NSManagedObject>(entityName: modelName)
-            fetchRequest.sortDescriptors = [idSort]
-            
-            do {
-                if let fetchResult: [SavedGif] = try context.fetch(fetchRequest) as? [SavedGif] {
-                    models = fetchResult
-                }
-            } catch let error as NSError {
-                print("Could not fetch: \(error), \(error.userInfo)")
+        guard let context = context else { return models }
+        let idSort: NSSortDescriptor = NSSortDescriptor(key: "id", ascending: ascending)
+        let fetchRequest: NSFetchRequest<NSManagedObject>
+        = NSFetchRequest<NSManagedObject>(entityName: modelName)
+        fetchRequest.sortDescriptors = [idSort]
+        do {
+            if let fetchResult: [SavedGif] = try context.fetch(fetchRequest) as? [SavedGif] {
+                models = fetchResult
             }
+        } catch let error as NSError {
+            print("Could not fetch: \(error), \(error.userInfo)")
         }
         return models
     }
     
-    func saveGif(id: String, url: String, onSuccess: @escaping ((Bool) -> Void)) {
-        guard let context = context, let entity = NSEntityDescription.entity(forEntityName: modelName, in: context) else { return }
-        guard let savedGif = NSManagedObject(entity: entity, insertInto: context) as? SavedGif else { return }
-        
-        savedGif.id = id
-        savedGif.url = url
-        
-        contextSave { success in
-            onSuccess(success)
+    func checkGif(by id: String) -> Bool {
+        guard let context = context else { return false }
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
+        do {
+            let result = try context.fetch(fetchRequest)
+            return result.count == 1
+        } catch let error as NSError {
+            print("Could not fetch: \(error), \(error.userInfo)")
+            return false
         }
     }
     
-    func deleteGif(id: String, onSuccess: @escaping ((Bool) -> Void)) {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
-        
+    func saveGif(id: String, url: String) {
+        guard let context = context, let entity = NSEntityDescription.entity(forEntityName: modelName, in: context) else { return }
+        guard let savedGif = NSManagedObject(entity: entity, insertInto: context) as? SavedGif else { return }
+        savedGif.id = id
+        savedGif.url = url
         do {
-            if let results: [SavedGif] = try context?.fetch(fetchRequest) as? [SavedGif] {
-                if results.count != 0 {
-                    context?.delete(results[0])
-                }
+            try context.save()
+        } catch let error as NSError {
+            print("Could not save: \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteGif(id: String) {
+        guard let context = context else { return }
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
+        do {
+            let results: [SavedGif] = try context.fetch(fetchRequest) as! [SavedGif]
+            if results.count != 0 {
+                context.delete(results[0])
             }
         } catch let error as NSError {
             print("Could not delete: \(error), \(error.userInfo)")
-            onSuccess(false)
         }
         
-        contextSave { success in
-            onSuccess(success)
-        }
     }
     
     private func filteredRequest(id: String) -> NSFetchRequest<NSFetchRequestResult> {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: modelName)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: modelName)
         fetchRequest.predicate = NSPredicate(format: "id = %@", NSString(string: id))
         return fetchRequest
-    }
-    
-    private func contextSave(onSuccess: ((Bool) -> Void)) {
-        do {
-            try context?.save()
-            onSuccess(true)
-        } catch let error as NSError {
-            print("Could not save: \(error), \(error.userInfo)")
-            onSuccess(false)
-        }
     }
     
 }

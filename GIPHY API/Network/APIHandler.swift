@@ -20,7 +20,6 @@ class APIHandler {
         static let baseURL = "https://api.giphy.com/v1/"
         static let search = "gifs/search?"
         static let trendingSearchTerms = "trending/searches"
-        
     }
     
     private init() { }
