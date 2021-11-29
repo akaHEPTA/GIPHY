@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController {
+    
+    private lazy var cdManager = CoreDataHandler.shared
     
     var data: Gif! {
         didSet {
             updateView()
         }
     }
+    
+    private var isFavorited = false
     
     private let imageView: UIImageView = {
         let iv = UIImageView()
@@ -25,7 +30,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favorite(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(favorite(_:)))
         setupView()
     }
     
@@ -38,7 +43,7 @@ class DetailViewController: UIViewController {
     }
     
     @objc func favorite(_ sernder: UIBarButtonItem) {
-        // MARK: - favorite system required
+        
     }
     
     private func updateView() {
